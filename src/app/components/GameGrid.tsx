@@ -381,7 +381,7 @@ const GameGrid: React.FC<GameGridProps> = ({
                                         : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
                                         }`}
                                 >
-                                    Women's
+                                    Women&apos;s
                                 </button>
                                 <button
                                     onClick={() => setShowWomensOnly(showWomensOnly === false ? null : false)}
@@ -390,7 +390,7 @@ const GameGrid: React.FC<GameGridProps> = ({
                                         : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
                                         }`}
                                 >
-                                    Men's
+                                    Men&apos;s
                                 </button>
                             </div>
                         </div>

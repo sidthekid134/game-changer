@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Game, ImportanceTag, SportType } from '../types';
-import { motion } from 'framer-motion';
 import { FaBasketballBall, FaBaseballBall, FaFootballBall, FaFutbol, FaInfoCircle, FaChevronDown, FaChevronUp, FaStar, FaMapMarkerAlt, FaClock, FaUsers, FaTrophy, FaTable } from 'react-icons/fa';
 import { GiTennisCourt } from 'react-icons/gi';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 interface GameCardProps {
     game: Game;
@@ -207,7 +208,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, sportType }) => {
                         )}
                         {game.isWomens !== undefined && (
                             <div className="text-xs text-gray-500 mb-1">
-                                {game.isWomens ? "Women's" : "Men's"} Singles
+                                {game.isWomens ? "Women&apos;s" : "Men&apos;s"} Singles
                             </div>
                         )}
                     </>
@@ -328,10 +329,12 @@ const GameCard: React.FC<GameCardProps> = ({ game, sportType }) => {
 
                 <div className="flex justify-between items-center mb-4">
                     <div className="flex items-center">
-                        <img
+                        <Image
                             src={game.awayTeam.logo}
                             alt={game.awayTeam.name}
-                            className="w-12 h-12 object-contain"
+                            width={48}
+                            height={48}
+                            className="object-contain"
                         />
                         <div className="ml-3">
                             {renderTeamOrPlayerName(game.awayTeam, false)}
@@ -353,10 +356,12 @@ const GameCard: React.FC<GameCardProps> = ({ game, sportType }) => {
                                 {renderTeamAffiliation(game.homeTeam)}
                             </div>
                         </div>
-                        <img
+                        <Image
                             src={game.homeTeam.logo}
                             alt={game.homeTeam.name}
-                            className="w-12 h-12 object-contain"
+                            width={48}
+                            height={48}
+                            className="object-contain"
                         />
                     </div>
                 </div>

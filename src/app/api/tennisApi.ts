@@ -304,7 +304,7 @@ const generateMockMatches = (): Game[] => {
             // Select players based on gender
             const playerKeys = Object.keys(tennisPlayers);
             const eligiblePlayers = playerKeys.filter(key => {
-                const playerIsWomens = tennisPlayers[key].isWomens === true;
+                const playerIsWomens = Boolean(tennisPlayers[key].isWomens);
                 return isWomens === playerIsWomens;
             });
 
@@ -358,7 +358,7 @@ const generateMockMatches = (): Game[] => {
                 awayTeam: country2, // Using country as "away team"
                 location: tournament.location,
                 arena: tournament.arena,
-                isImportant,
+                isImportant: Boolean(isImportant),
                 importanceReason,
                 keyMatchups,
                 tournament: {
@@ -368,7 +368,7 @@ const generateMockMatches = (): Game[] => {
                     round: round
                 },
                 sets: isWomens ? tournament.womenSets : tournament.sets,
-                isWomens
+                isWomens: Boolean(isWomens)
             });
         }
     }

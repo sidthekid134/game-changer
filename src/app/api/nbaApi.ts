@@ -396,6 +396,7 @@ const generateMockGames = (): Game[] => {
             // Create the game object
             const game: Game = {
                 id: games.length + 1,
+                sportType: 'basketball',
                 date: formattedDate,
                 time,
                 homeTeam,
@@ -469,7 +470,7 @@ const generateImportanceReason = (
     }
 
     // Check if there are any players with streaks in the league for context
-    const allPlayersWithStreaks = getPlayersWithStreaks();
+    const allPlayersWithStreaks = getAllPlayersWithStreaks();
     // If this game features players with streaks that are among the top streaks in the league, highlight it
     const hasTopStreakPlayer = [...homePlayersWithStreaks, ...awayPlayersWithStreaks].some(player =>
         allPlayersWithStreaks.slice(0, 3).some(p => p.id === player.id)
@@ -500,7 +501,7 @@ const generateImportanceReason = (
         selectedTags[selectedTags.length - 1] = 'Player Streak';
     }
 
-    const shortDescriptions: Record<ImportanceTag, string> = {
+    const shortDescriptions: Partial<Record<ImportanceTag, string>> = {
         'Playoff Implications': `Critical for ${homeTeam.name} & ${awayTeam.name} playoff positioning`,
         'Rivalry Game': `Historic rivalry between ${homeTeam.city} and ${awayTeam.city}`,
         'Star Matchup': 'Multiple All-Stars face off in key matchup',
@@ -516,7 +517,7 @@ const generateImportanceReason = (
         'Hot Team': `${homeTeam.name} or ${awayTeam.name} on a significant win streak`
     };
 
-    const detailedAnalyses: Record<ImportanceTag, string> = {
+    const detailedAnalyses: Partial<Record<ImportanceTag, string>> = {
         'Playoff Implications': `This matchup has significant playoff implications for both teams. The ${homeTeam.name} and ${awayTeam.name} are battling for crucial playoff positioning in the ${homeTeam.conference} Conference. A win here could mean the difference between home-court advantage or a more favorable first-round matchup.`,
 
         'Rivalry Game': `The historic rivalry between the ${homeTeam.city} ${homeTeam.name} and ${awayTeam.city} ${awayTeam.name} always delivers intensity. These teams have met in the playoffs multiple times, and the bad blood continues to simmer. Expect physical play and heightened emotions from both sides.`,
@@ -678,6 +679,15 @@ const getMvpCandidateDetailedAnalysis = (
     }
 
     return analysis;
+};
+
+// Add this function before it's used
+const getAllPlayersWithStreaks = (): Player[] => {
+    // Get all team IDs from the mockPlayers
+    const teamIds = Object.keys(nbaTeams).map(team => nbaTeams[team].id.toString());
+
+    // Get players with streaks from all teams and flatten the array
+    return teamIds.flatMap(teamId => getPlayersWithStreaks(teamId));
 };
 
 // Function to fetch all upcoming games
