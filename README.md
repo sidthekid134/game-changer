@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NBA Game Analyzer
+
+A modern web application that scans through upcoming NBA games and highlights the important or potentially critical matchups with detailed analysis.
+
+## Features
+
+- **Game Importance Analysis**: Automatically identifies important NBA games with detailed reasoning
+- **Color-coded Importance Tags**: Quick visual identification of why games matter (Playoff Implications, Rivalry Games, etc.)
+- **Key Matchups**: Highlights specific player and team matchups that will influence game outcomes
+- **Expandable Details**: Concise summaries with expandable sections for more in-depth analysis
+- **Filtering Options**: Filter by week, playoff round, or show only important games
+- **Responsive Design**: Works on all device sizes with a clean, modern interface
+
+## Technology Stack
+
+- **Next.js**: React framework for the frontend
+- **TypeScript**: Type-safe JavaScript
+- **Tailwind CSS**: Utility-first CSS framework for styling
+- **Framer Motion**: Animation library for smooth transitions
+- **date-fns**: Modern JavaScript date utility library
+- **React Icons**: Popular icon library
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js 16.8 or later
+- npm or yarn
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/game-analyzer.git
+   cd game-analyzer
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-## Learn More
+3. Run the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **View Important Games**: By default, the app shows only important games
+- **Filter Games**: Use the filters at the top to view all games, filter by week, or by playoff round
+- **Expand Details**: Click "Show detailed analysis" to see in-depth information about why a game is important
+- **View Key Matchups**: Click "View" under the Key Matchups section to see specific matchups to watch for
 
-## Deploy on Vercel
+## Notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This application uses mock data to simulate an NBA games API. In a production environment, you would connect to a real NBA API to fetch live game data.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Future Enhancements
+
+- User authentication to save favorite teams and receive notifications
+- Historical data analysis to compare teams and predict outcomes
+- Integration with real NBA statistics API
+- Social sharing features for important games
+- Dark mode support
+
+## License
+
+MIT
