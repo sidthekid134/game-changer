@@ -33,7 +33,5 @@ TaskSchema.pre('save', function(next) {
   next();
 });
 
-// For future implementation with MongoDB
-// This is a placeholder for the actual database implementation
-// Will be implemented in future stories
-module.exports = {};
+// Create and export the Task model
+module.exports = mongoose.model('Task', TaskSchema);

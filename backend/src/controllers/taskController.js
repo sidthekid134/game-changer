@@ -1,14 +1,16 @@
 const Task = require('../models/Task');
+const mongoose = require('mongoose');
 
 // Get all tasks
 exports.getAllTasks = async (req, res, next) => {
   try {
-    // This is a placeholder for actual database implementation
-    // Will be implemented in future stories
+    const tasks = await Task.find({}).sort({ createdAt: -1 });
+
     res.status(200).json({
       success: true,
+      count: tasks.length,
       message: 'Tasks retrieved successfully',
-      data: []
+      data: tasks
     });
   } catch (error) {
     next(error);
@@ -20,12 +22,27 @@ exports.getTaskById = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    // This is a placeholder for actual database implementation
-    // Will be implemented in future stories
+    // Check if the ID is valid
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid task ID format'
+      });
+    }
+
+    const task = await Task.findById(id);
+
+    if (!task) {
+      return res.status(404).json({
+        success: false,
+        message: 'Task not found'
+      });
+    }
+
     res.status(200).json({
       success: true,
       message: 'Task retrieved successfully',
-      data: { id, title: 'Sample Task', description: 'This is a placeholder task', status: 'pending' }
+      data: task
     });
   } catch (error) {
     next(error);
@@ -45,12 +62,28 @@ exports.createTask = async (req, res, next) => {
       });
     }
 
-    // This is a placeholder for actual database implementation
-    // Will be implemented in future stories
+    // Validate status if provided
+    if (status && !['pending', 'in_progress', 'completed'].includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Status must be one of: pending, in_progress, completed'
+      });
+    }
+
+    // Create new task
+    const task = new Task({
+      title,
+      description,
+      status: status || 'pending'
+    });
+
+    // Save task to database
+    await task.save();
+
     res.status(201).json({
       success: true,
       message: 'Task created successfully',
-      data: { id: Date.now().toString(), title, description, status: status || 'pending' }
+      data: task
     });
   } catch (error) {
     next(error);
@@ -63,12 +96,45 @@ exports.updateTask = async (req, res, next) => {
     const { id } = req.params;
     const { title, description, status } = req.body;
 
-    // This is a placeholder for actual database implementation
-    // Will be implemented in future stories
+    // Check if the ID is valid
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid task ID format'
+      });
+    }
+
+    // Validate status if provided
+    if (status && !['pending', 'in_progress', 'completed'].includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Status must be one of: pending, in_progress, completed'
+      });
+    }
+
+    // Find the task
+    const task = await Task.findById(id);
+
+    if (!task) {
+      return res.status(404).json({
+        success: false,
+        message: 'Task not found'
+      });
+    }
+
+    // Update task
+    task.title = title || task.title;
+    task.description = description !== undefined ? description : task.description;
+    task.status = status || task.status;
+    task.updatedAt = Date.now();
+
+    // Save updated task
+    const updatedTask = await task.save();
+
     res.status(200).json({
       success: true,
       message: 'Task updated successfully',
-      data: { id, title, description, status }
+      data: updatedTask
     });
   } catch (error) {
     next(error);
@@ -80,8 +146,24 @@ exports.deleteTask = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    // This is a placeholder for actual database implementation
-    // Will be implemented in future stories
+    // Check if the ID is valid
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid task ID format'
+      });
+    }
+
+    // Find and delete the task
+    const task = await Task.findByIdAndDelete(id);
+
+    if (!task) {
+      return res.status(404).json({
+        success: false,
+        message: 'Task not found'
+      });
+    }
+
     res.status(200).json({
       success: true,
       message: 'Task deleted successfully'
